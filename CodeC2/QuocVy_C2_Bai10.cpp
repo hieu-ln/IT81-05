@@ -1,0 +1,123 @@
+#include <iostream>
+using namespace std;
+
+//C10.1 Khai bao cau truc stack
+struct Node
+{
+	int info;
+	Node *link;
+};
+Node *sp;
+//C10.2 Khoi tao stack rong
+void init()
+{
+	sp = NULL;
+}
+//C10.3 Kiem tra stack rong
+int isEmpty()
+{
+	if (sp == NULL)
+		return 1;
+	return 0;
+}
+//C10.4 Push (them phan tu)
+void Push(int x)
+{
+	Node *p = new Node;
+	p->info = x;
+	p->link = sp;
+	sp = p;
+}
+//C10.5 Pop(Lay phan tu ra)
+int Pop(int &x)
+{
+	if (sp != NULL)
+	{
+		Node *p = sp;
+		x = p->info;
+		sp = p->link;
+		delete p;
+		return 1;
+	}
+	return 0;
+}
+//C10.6 Xuat stack
+void xuat()
+{
+	Node *p = sp;
+	do{
+		cout << p->info << "  ";
+		p = p->link;
+	} while (p != NULL);
+	cout << endl;
+}
+//C10.7 Chuyen doi nhi phan
+int nhiphan(int x)
+{
+	int a;
+	if (x == 0)
+		return 0;
+	else
+	{
+		a = x % 2;
+		return nhiphan(x / 2) * 10 + a;
+	}
+}
+int main()
+{
+	int choose, x;
+	system("cls");
+	cout << "1.Khoi tao stack rong " << endl;
+	cout << "2. Kiem tra stack rong" << endl;
+	cout << "3. Them 1 phan tu vao stack " << endl;
+	cout << "4. Xoa 1 phan tu trong stack " << endl;
+	cout << "5. Xuat stack ra man hinh" << endl;
+	cout << "6. Doi 1 gia tri trong stack sang he nhi phan " << endl;
+	cout << "7. Thoat " << endl;
+	do{
+		cout << "Nhap so thu tu thao tac muon thuc hien: ";
+		cin >> choose;
+		switch (choose)
+		{
+		case 1:
+			init();
+			cout << "Khoi tao stack thanh cong! " << endl;
+			break;
+		case 2:
+			if (isEmpty() == 1)
+				cout << "Stack hien tai dang rong " << endl;
+			else
+				cout << "Stack khong rong " << endl;
+			break;
+		case 3:
+			cout << "Nhap gia tri phan tu them vao: ";
+			cin >> x;
+			Push(x);
+			cout << "Stack sau khi them: ";
+			xuat();
+			break;
+		case 4:
+			cout << "Nhap phan tu muon lay ra: ";
+			cin >> x;
+			Pop(x);
+			cout << "Stack sau khi lay ra: ";
+			xuat();
+			break;
+		case 5:
+			cout << "Stack hien tai la: ";
+			xuat();
+			break;
+		case 6:
+			cout << "Nhap gia tri trong stack muon chuyen nhi phan: ";
+			cin >> x;
+			cout << x << " o he nhi phan la: " << nhiphan(x) << endl;
+			break;
+		case 7:
+			cout << "Ban chon thoat! " << endl;
+			break;
+		default:
+			break;
+		}
+	} while (choose != 7);
+	return 0;
+}
